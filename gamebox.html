@@ -1,0 +1,399 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GameBox</title>
+  <!-- IMPORTED STYLESHEETS & GOOGLE FONTS -->
+  <link rel="stylesheet" href="../css/foundation.css" />
+  <link rel="stylesheet" href="../assets/foundation-icons/foundation-icons.css" />
+  <link rel="stylesheet" href="../css/app.css" />
+  <link href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="../js/vendor/jquery.min.js"></script>
+  <script src="../js/foundation.min.js"></script>
+  <script src="../js/app.js"></script>
+  <script type="text/javascript" src="../js/paper-full.js"></script>
+  <script type="text/paperscript" src="../js/tac.js" canvas="splash-background"></script>
+
+</head>
+
+
+
+<body>
+
+  <!-- HEADER GRID -->
+
+  <div class="expanded row" style="margin:auto;">
+
+    <canvas id="splash-background" style="position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%); z-index:-1;  height:100%; width: 100%; opacity: 0.5;"></canvas>
+    <!-- LOGIN -->
+    <div class="login" style="position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%); height:100%; width: 100%;">
+
+
+      <div id="login-screen" style="position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%); height: 300px; width: 300px;">
+        <h1 style="display: inline-block; font-size: 28px; margin-top:40px; margin-bottom: 10px;"> Game<span>Box</span> </h1>
+        <a data-open="chat-connect" id="start-button"><h1 style="font-size: 18px; margin-top: 30px;">Login</h1></a>
+
+
+        <p id="login-error"></p>
+        <div class="login-reveal" style="margin:auto; padding: 10px; border-radius: 10px;">
+          <h1 id="connect-username-label" >Enter nickname</h1>
+          <form>
+            <input type="text" id="username-form" autocomplete="off" placeholder=""  style=" margin:auto; max-width:300px; padding: 5px;text-align:center; border-radius: 5px; border-color: #214f6e; font-size: 18px; color:black; background-color: #f0f0f0;">
+          </form>
+          <!-- Connect button for chat connect screen -->
+          <a id="submit-nickname" > <h1  style=" font-size: 22px; margin-top: 40px; border-style: solid; border-radius: 5px; background-color: #13191d; border-color:#13191d; ">Connect</h1></a>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- TOP BAR -->
+    <div class="top-bar" style="height: 100%; background-color: transparent; width: 100%; ">
+      <h1 id="logo" style="font-size: 28px;"> Game<span>Box</span> </h1>
+      <h1 id="connection-info" style="font-size: 16px; margin: auto;">.</h1>
+      <h1><a id="manual-disconnect"  style="font-size: 16px; margin: auto; padding-top: 5px;"> <span>Disconnect</span> </a></h1>
+    </div>
+
+
+    
+
+    <!-- CHATBOX -->
+    <div class="chatbox" style="height: 100%;">
+
+
+
+      <div class="options-reveal" style="width: 100%; height: 80%; background-color: #13191d; position: absolute; z-index: 1;">
+        <a class="options-close"><i class="large fi-x"></i></a>
+
+
+        <div class="options" style="margin:auto; padding:10px; height: 80px; background-color: transparent; ">
+          <a class="options-button" id="op-rooms" style="padding:10px;"><i class="medium fi-layout"></i></a>
+          <a class="options-button" id="op-users" style="padding:10px;"><i class="medium fi-torsos-all"></i></a>
+          <a class="options-button" id="op-settings" style="padding:10px;"><i class="medium fi-wrench"></i></a>
+          <a class="options-button" id="op-info" style="padding:10px;"><i class="medium fi-info"></i></a>
+
+        </div>
+
+
+
+        <div id="op-rooms-list">
+
+          <h1 style="margin:auto; font-size: 24px;"> <span>Rooms</span> </h1>
+
+          <div class="tetris-room" style="width: 100%; height: 200px; background-color: transparent;padding: 10px;">
+            <div id="room-container" style="margin:auto; width: 300px; height: 200px; border-style: solid; border-width: 2px;  border-radius: 3px; border-color: #0f1519; background-color: #1f282e; padding: 10px;">
+              <h1 style="font-size: 24px; margin: auto; padding: 25px;"> Lobby </h1>
+              <a id="join-lobby" ><h1> <span>Join Room </span></h1> </a>
+            </div>
+          </div>
+
+          <div class="rps-room" style="width: 100%; height: 200px; background-color: transparent; padding: 10px;">
+           <div id="room-container" style="margin:auto; width: 300px; height: 200px; border-style: solid; border-width: 2px;  border-radius: 3px; border-color: #0f1519; background-color: #1f282e; padding: 10px;">
+            <h1 style="font-size: 24px; "> Rock Paper Scissors </h1>
+            <p id="rps-room-info"> Room is empty </p>
+              <a id="join-rps" ><h1> <span>Join Room </span></h1> </a>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="op-users-list">
+        <h1 style="margin:auto; font-size: 24px; padding-bottom: 10px;">  <span>Users Online</span> </h1>
+        <div id="room-container" style="margin:auto; width: 300px; height: 200px; border-style: solid; border-width: 2px;  border-radius: 3px; border-color: #0f1519; background-color: #1f282e; padding: 10px;">
+        <h1 id="global-user-counter">.</h1>
+          <ul id="users">
+          </ul>
+        </div>
+      </div>
+
+      <div id="op-settings-list">
+        <h1 style="margin:auto; font-size: 24px; padding-bottom: 10px;">  <span>Settings</span> </h1>
+        <div id="room-container" style="margin:auto; width: 300px; height: 200px; border-style: solid; border-width: 2px;  border-radius: 3px; border-color: #0f1519; background-color: #1f282e; padding: 10px;">
+          <a class="options-button" id="op-animation-toggle" style="padding:10px;"><i class="medium fi-eye" style=" display: inline-block;"></i>Background animation</a>
+        </div>
+      </div>
+
+      <div id="op-info-list">
+        <h1 style="margin:auto; font-size: 24px; padding-bottom: 10px;">  <span>Info</span> </h1>
+        <div id="room-container" style="margin:auto; width: 300px; height: 220px; border-style: solid; border-width: 2px;  border-radius: 3px; border-color: #0f1519; background-color: #1f282e; padding: 10px;">
+          <h1 style="margin:auto; font-size: 18px; padding-bottom: 10px;">  Game<span>Box</span> 0.3</h1>
+          <p> A gaming platform for browser based multiplayer games</p>
+          <p style="padding: 25px;"> Feedback email: <span>saaremets.kristjan@gmail.com</span> </p>
+        </div>
+      </div>
+
+    </div>
+    <div class="options" style="margin:auto; height: 100px; display: inline-block;">
+      <a class="options-button"><i class="large fi-list"></i></a>
+    </div>
+
+<div class="rps-canvas" style="height: 300px; width: 100%; background-color:black; margin: auto; padding: 25px; opacity: 0.7;">
+    <h1> Welcome to Rock Paper Scissors Room </h1>
+    <p> Waiting for opponent </p>
+    </div>
+    <div class="message-box">
+      <ul id="messages"></ul>
+    </div>
+    <form id="message-form" >
+      <input type="text" id="message-data" autocomplete="off" placeholder="">
+    </form>
+  </div>
+
+</div>
+
+
+<script>
+    // Initialize socket.io
+    var socket = io('http://139.162.146.145:3030');
+    var messageBox = $('.message-box');
+    var height = messageBox.height();
+    var userarray = [];
+    var roomarray = [];
+    var usercheck;
+    var animation_toggle = true;
+    $(".top-bar").hide();
+    $(".login-reveal").hide();
+    $("#submit-nickname").hide();
+    $(".chatbox").hide();
+    $(".newroom-reveal").hide();
+    $(".joinroom-reveal").hide();
+    $("#manual-disconnect").hide();
+    $(".options-reveal").hide();
+    $("#op-rooms-list").hide();
+    $("#op-users-list").hide();
+    $("#op-settings-list").hide();    
+    $("#op-info-list").show();
+    $(".rps-canvas").hide();
+
+      // When page is done loading
+      $(document).ready(function(){
+
+
+      //***** NICKNAME VALIDATION *****
+      $("#start-button").click(function(){
+        $(".login-reveal").show();
+        $("#start-button").hide();
+        $("#submit-nickname").hide();
+
+        $('#username-form').keyup(function(){
+          if($(this).val().length !=0)
+            $("#submit-nickname").show();
+          else
+            $("#submit-nickname").hide();
+        });
+      });
+
+  //***** USERNAME SUBMISSION *****
+  $("#submit-nickname").click(function(){
+    var username = $('#username-form').val();
+    socket.emit('new user', username);
+    usercheck = username;
+    $('#connection-info').text(" ");
+    $('#connection-info').append("Connected as " + username);
+    $('#username-form').val('');
+    $(".login").hide();
+    $(".chatbox").show();
+    $("#manual-disconnect").show();
+    $("#connection-info").show();
+    $(".top-bar").show();
+
+    $('#login-error').text(" ");
+    return false;
+  });
+
+
+  socket.on('username error', function(){
+    $(".login-reveal").hide();
+    $(".chatbox").hide();
+    $(".top-bar").hide();
+    $(".login").show();
+    $("#start-button").show();
+    $("#splash-background").show();
+    $('#login-error').text("Login error. Username already exists.");
+  });
+
+  $(".options-button").click(function(){
+    $(".options-reveal").show();
+    $(".options-close").click(function(){
+     $(".options-reveal").hide();
+   });
+
+  });
+
+  $("#op-rooms").click(function(){
+    $("#op-rooms-list").show();
+    $("#op-users-list").hide();
+    $("#op-settings-list").hide();
+    $("#op-info-list").hide();
+  });
+
+  $("#op-users").click(function(){
+    $("#op-rooms-list").hide();
+    $("#op-users-list").show();
+    $("#op-settings-list").hide();
+    $("#op-info-list").hide();
+
+  });
+
+  $("#op-settings").click(function(){
+    $("#op-rooms-list").hide();
+    $("#op-users-list").hide();
+    $("#op-settings-list").show();
+    $("#op-info-list").hide();
+
+  });
+
+  $("#op-info").click(function(){
+    $("#op-rooms-list").hide();
+    $("#op-users-list").hide();
+    $("#op-settings-list").hide();
+    $("#op-info-list").show();
+
+  });
+
+  $("#op-animation-toggle").click(function(){
+
+    if(animation_toggle == true){
+      animation_toggle = false;
+      $("#splash-background").hide();
+      return;
+    }
+    if(animation_toggle == false){
+      animation_toggle = true;
+      $("#splash-background").show();
+      return;
+    }
+
+
+  });
+
+
+  // ROOM TRACKING
+  socket.on('current room update', function(room){
+    $('#online-current-room').text(" ");
+    $('#online-current-room').append("Online in " + room);
+  });
+
+
+socket.on('rps room update', function(user_count, username){
+
+
+if(user_count == 1){
+    $('#rps-room-info').text(username + " waiting for opponent.");
+    $("#join-rps").show();
+} 
+
+if(user_count == 2){
+    $('#rps-room-info').text("Room is full");
+    $("#join-rps").hide();
+}
+
+if(user_count == 0 || user_count == undefined) {
+  $('#rps-room-info').text("Room is empty");
+  $("#join-rps").show();
+}
+
+ });
+
+//***** ROOM CREATING *****
+$("#join-lobby").click(function(){
+socket.emit('join room', "Lobby");
+$(".options-reveal").hide();
+$(".rps-canvas").hide();
+return false;
+}); 
+
+
+$("#join-rps").click(function(){
+socket.emit('join room', "Rock Paper Scissors");
+$(".options-reveal").hide();
+$(".rps-canvas").show();
+
+return false;
+}); 
+
+//***** ROOM JOINING *****
+$("#newroom").click(function(){
+  $(".newroom-reveal").show();
+}); 
+
+$("#newroom-reveal-close").click(function(){
+  $(".newroom-reveal").hide();
+}); 
+
+$("#newroom-reveal-create").click(function(){
+  $(".newroom-reveal").hide();
+  var roomname = $('#new-room-name').val();
+  socket.emit('create room', roomname);
+  return false;
+});
+
+
+//***** MANUAL DISCONNECT *****
+$("#manual-disconnect").click(function(){
+  socket.emit('manual disconnect', usercheck);
+  $(".login-reveal").hide();
+  $(".chatbox").hide();
+  $("#connection-info").hide();
+  $("#manual-disconnect").hide();
+  $(".top-bar").hide();
+  $(".login").show();
+  $("#start-button").show();
+  $("#splash-background").show();
+}); 
+
+
+//***** USER LIST UPDATE *****
+socket.on('user list update', function(userlist){
+  $("ul#users").empty();
+   $("#global-user-counter").empty();
+  userarray = userlist;
+  for(var i=0; i < userarray.length; i++) {
+    $('#users').append('<li>' + userarray[i] + '</li>');
+  }
+});
+
+//***** ROOM LIST UPDATE *****
+socket.on('room list update', function(roomlist){
+  $("ul#rooms").empty();
+  $("#room-join-list").empty();
+  roomarray = roomlist;
+  for(var i=0; i < roomarray.length; i++) {
+    String(roomarray[i]);
+    $('#rooms').append('<li>' + roomarray[i] + '</li>');
+    $('#room-join-list').append('<option>' + roomarray[i] + '</option>');
+  }
+});
+
+
+//***** SENDING MESSAGES *****
+$('form#message-form').submit(function(){
+  var message = $('#message-data').val();
+  socket.emit('message to server', message);
+  $('#message-data').val('');
+  return false;
+});
+
+//***** LISTENING FOR MESSAGES *****
+socket.on('message to client', function(username, message){
+      // Append the recived message to the list with id #messages
+     // $('#messages').append($('<li>').text(username + " " + message));
+     $('#messages').append("<li> <span> " + username + " </span> " + message);
+
+
+
+     messageBox.animate({scrollTop: height}, 500);
+     height += messageBox.height();
+   });
+});
+
+</script>
+
+<script>$(document).foundation();</script>
+</body>
+</html>

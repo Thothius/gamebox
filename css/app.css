@@ -1,0 +1,228 @@
+/* Fonts imported
+font-family: 'Shadows Into Light Two', cursive;
+font-family: 'Londrina Shadow', cursive;
+font-family: 'Lato', sans-serif;
+font-family: 'Gruppo', cursive;
+font-family: 'Rajdhani', sans-serif;
+*/
+
+
+/* BASE STYLING */
+body{
+	height:100%;
+	background-color: #13191d;
+	color: #f2f0e0;
+	text-align: center;
+	margin: 0;
+}
+
+html{
+	height:100%;
+}
+
+ul {
+	font-size: 16px;
+	list-style: none;
+}
+
+li{
+	font-size: 14px;
+	text-align: center;
+	text-align: justify-all;
+}
+
+h1{
+font-family: 'Droid Sans', sans-serif;
+	font-size: 18px;
+	color: #f2f0e0;
+}
+
+h2{
+
+font-family: 'Droid Sans', sans-serif;
+	font-size: 18px;
+	color: black;
+}
+
+p{
+	text-align: justify-all;
+	font-size: 14px;
+}
+span{
+	color: #cb3639;
+}
+
+a{
+color: #cb3639;
+text-decoration: none;
+
+}
+
+a:hover, a:visited, a:link, a:active{
+color: #cb3639;
+text-decoration: none;
+
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+      width: 15px;
+} /* this targets the default scrollbar (compulsory) */
+::-webkit-scrollbar-track {
+      background-color: #1f282e;
+} /* the new scrollbar will have a flat appearance with the set background color */
+ 
+::-webkit-scrollbar-thumb {
+      background-color: #cb3639;
+} /* this will style the thumb, ignoring the track */
+ 
+::-webkit-scrollbar-button {
+      background-color: #1f282e;
+} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+ 
+::-webkit-scrollbar-corner {
+      background-color: #1f282e;
+} /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+::-webkit-scrollbar-track-piece {
+background-color: #1f282e;
+}
+
+
+/* ICON ELEMENTS */
+
+i.small  { font-size: 1rem; }
+i.medium  { font-size: 3rem; }
+i.large  { font-size: 4rem; }
+
+i{
+background-color: transparent;
+}
+
+a.options-button{
+background-color: transparent;
+color: white;
+}
+
+a.options-button:hover{
+	color: #cb3639;
+}
+
+
+/* NAVIGATION AND LOGO */
+
+.title-bar{
+	width: 100%;
+	height:50px;
+	margin: 0 auto;
+	background-color: #13191d;
+}
+
+
+
+
+.message-box{
+opacity: 0.9;
+padding-top: 10px;
+padding-left: 10px;
+float: left;
+height: 200px;
+width: 100%;
+background-color: #1f282e;
+overflow:scroll;
+word-wrap: break-word;
+border-style: solid;
+border-color: #0f1519;
+border-top-right-radius: 5px;
+border-top-left-radius: 5px;
+overflow-x: hidden;
+font-family: 'Droid Sans', sans-serif;
+}
+
+.joinroom-reveal{
+padding: 5px;
+position: relative;
+max-width:400px;
+width: 50%;
+max-height: 200px;
+height: 150px;
+width:100%;
+text-align: center;
+display: inline-block;
+float: left;
+background-color: transparent;
+word-wrap: break-word;
+border-style: solid;
+border-color: #0f1519;
+font-family: 'Droid Sans', sans-serif;
+}
+
+#users li{
+list-style-type: none;
+width: 100%; 
+text-align: center;
+font-family: 'Droid Sans', sans-serif;
+font-size: 16px;
+font-weight: 200;
+color: white;
+margin-left: -8px;
+}
+
+#rooms li{
+list-style-type: none;
+width: 100%; 
+text-align: center;
+font-family: 'Droid Sans', sans-serif;
+font-size: 12px;
+font-weight: 200;
+color: white;
+margin-left: -8px;
+}
+
+#room{
+font-size: 16px;
+}
+
+#messages li{
+list-style-type: none;
+font-family: 'Droid Sans', sans-serif;
+font-size: 16px;
+font-weight: 200;
+color: white;
+text-align: left;
+padding-left: 5px;
+background: transparent;
+}
+
+#messages li:nth-child(odd) {
+/* background: #35434d; */
+}
+
+
+#message-form{
+
+background-color: transparent;
+border-width: 3px;
+border-style: solid;
+border-color: #0f1519;
+border-bottom-right-radius: 5px;
+border-bottom-left-radius: 5px;
+height: 150px;
+}
+
+#message-data{
+opacity: 0.9;
+margin:auto;
+width:100%;
+padding:25px;
+text-align:left;
+font-size: 24px;
+color:white;
+background-color: #2c363d;
+height: 100px;
+border-width: 0px;
+}
+
+#message-data:focus {
+background-color: #414d55;
+}
